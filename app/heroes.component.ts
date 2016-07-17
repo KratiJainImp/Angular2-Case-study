@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import {HeroDetailComponent} from './hero-detail.component';
 import {Hero} from './hero'; // Can be replace by the below line
 import { HeroService } from './hero.service';
-import { OnInit } from '@angular/core';
+import { OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 //import {HeroDetailComponent,Hero} from './hero-detail.component';
 
 @Component({
@@ -72,9 +74,11 @@ export class HeroesComponent implements OnInit {
     ngOnInit() {
         this.getHeroes();
     }
-
-    constructor(private heroService:HeroService) {
+    constructor(
+        private heroService: HeroService,
+        private route: ActivatedRoute) {
     }
+
 
     selectedHero:Hero;
     title = 'Tour of Heroes';
