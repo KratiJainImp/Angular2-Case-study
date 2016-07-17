@@ -1,0 +1,8 @@
+#Excluding node modules
+node_modules/*
+
+#Excluding map files
+*.js.map
+
+#Excluding webstorm folder
+.idea/*
