@@ -9,20 +9,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 /**
- * Created by abc on 16-Jul-16.
+ * Created by abc on 17-Jul-16.
  */
 var core_1 = require('@angular/core');
-var DashboardComponent = (function () {
-    function DashboardComponent() {
+var ContactsComponent = (function () {
+    function ContactsComponent() {
     }
-    DashboardComponent = __decorate([
+    ContactsComponent.prototype.ngOnInit = function () {
+        console.info("Heyoo..!! Am loaded");
+    };
+    ContactsComponent = __decorate([
         core_1.Component({
-            selector: 'my-dashboard',
-            template: '<h3>My Dashboard</h3>'
+            selector: 'contact-grid',
+            template: "<h1>This is the contact view</h1>"
         }), 
         __metadata('design:paramtypes', [])
-    ], DashboardComponent);
-    return DashboardComponent;
+    ], ContactsComponent);
+    return ContactsComponent;
 }());
-exports.DashboardComponent = DashboardComponent;
-//# sourceMappingURL=app.dashboard.component.js.map
+exports.ContactsComponent = ContactsComponent;
+//# sourceMappingURL=contacts.component.js.map

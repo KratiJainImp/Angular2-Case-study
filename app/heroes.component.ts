@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
+import { Component,OnInit, OnDestroy } from '@angular/core';
 import {HeroDetailComponent} from './hero-detail.component';
-import {Hero} from './hero'; // Can be replace by the below line
+import {Hero} from './hero';
 import { HeroService } from './hero.service';
-import { OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
-//import {HeroDetailComponent,Hero} from './hero-detail.component';
 
-@Component({
+@Component(
+    {
     selector: 'my-heroes',
     template: `
     <div>
@@ -17,7 +16,15 @@ import { ActivatedRoute } from '@angular/router';
     (click)="onSelect(hero)">
      <span class="badge">{{hero.id}}</span> {{hero.name}}</li></ul>
     </div>
-    <my-hero-detail [hero]="selectedHero"></my-hero-detail>
+  
+  
+  <div *ngIf="selectedHero">
+  <h2>
+    {{selectedHero.name | uppercase}} is my hero
+  </h2>
+  <button (click)="goToDetail()">View Details</button>
+</div>
+
     `,
     styles: [`
   .selected {
@@ -70,30 +77,22 @@ import { ActivatedRoute } from '@angular/router';
 `],
     directives: [HeroDetailComponent]
 })
+
 export class HeroesComponent implements OnInit {
+    heroes: Hero[];
+    selectedHero: Hero;
+    constructor(
+        private router: Router,
+        private heroService: HeroService) { }
+    getHeroes() {
+        this.heroService.getHeroes().then(heroes => this.heroes = heroes);
+    }
     ngOnInit() {
         this.getHeroes();
     }
-    constructor(
-        private heroService: HeroService,
-        private route: ActivatedRoute) {
+    onSelect(hero: Hero) { this.selectedHero = hero; }
+    goToDetail() {
+        this.router.navigate(['/detail', this.selectedHero.id]);
     }
-
-
-    selectedHero:Hero;
-    title = 'Tour of Heroes';
-    public heroes;
-
-    getHeroes() {
-        this.heroService.getHeroes().
-            then(heroes=>this.heroes = heroes).
-            catch(err=>console.log("Ooopss Error => " + err));
-    }
-
-    onSelect(hero:Hero) {
-        this.selectedHero = hero;
-        console.log(this.selectedHero)
-    }
-
-
 }
+
