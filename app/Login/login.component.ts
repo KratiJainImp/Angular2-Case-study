@@ -3,7 +3,7 @@
  */
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-
+import { NgForm }    from '@angular/forms';
 
 @Component({
     moduleId : module .id,
@@ -12,7 +12,23 @@ import { OnInit } from '@angular/core';
 })
 
 export class LoginComponent implements OnInit{
+
+    userDetails = new UserCredential();
+
     ngOnInit() {
     console.info("Heyoo..!! Am login");
         }
+
+    OnSubmit(){
+
+    }
+
+    get diagonostic(){
+        return JSON.stringify(this.userDetails);
+    }
+}
+
+export class UserCredential{
+    username:string;
+    password:string;
 }

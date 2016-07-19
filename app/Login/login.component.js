@@ -14,10 +14,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var LoginComponent = (function () {
     function LoginComponent() {
+        this.userDetails = new UserCredential();
     }
     LoginComponent.prototype.ngOnInit = function () {
         console.info("Heyoo..!! Am login");
     };
+    LoginComponent.prototype.OnSubmit = function () {
+    };
+    Object.defineProperty(LoginComponent.prototype, "diagonostic", {
+        get: function () {
+            return JSON.stringify(this.userDetails);
+        },
+        enumerable: true,
+        configurable: true
+    });
     LoginComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
@@ -29,4 +39,10 @@ var LoginComponent = (function () {
     return LoginComponent;
 }());
 exports.LoginComponent = LoginComponent;
+var UserCredential = (function () {
+    function UserCredential() {
+    }
+    return UserCredential;
+}());
+exports.UserCredential = UserCredential;
 //# sourceMappingURL=login.component.js.map
