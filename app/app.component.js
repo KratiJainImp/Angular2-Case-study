@@ -21,7 +21,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n    <div class=\"container main-div\">\n    <h1>{{title}}</h1>\n    <div class=\"alert col-md-12\" role=\"alert\">\n        <a href=\"#\" class=\"alert-link\"></a>\n    </div>\n    <div class=\"col-md-12\">\n        <a [routerLink]=\"['/heroes']\">Heroes</a>\n    <a [routerLink]=\"['/dashboard']\">Dashboard</a>\n    <a [routerLink]=\"['/contacts']\">Contacts</a>\n      <a [routerLink]=\"['/login']\">Login</a>\n    <router-outlet></router-outlet>\n    </div>\n\n\n</div>\n   \n  ",
+            template: "\n<div class=\"container page-header\">\n    <div ><span>{{title}}</span></div>\n</div>\n    <div class=\"container main-div\">\n   \n    <div class=\"col-md-12\">\n        <a [routerLink]=\"['/heroes']\">Heroes</a>\n    <a [routerLink]=\"['/dashboard']\">Dashboard</a>\n    <a [routerLink]=\"['/contacts']\">Contacts</a>\n      <a [routerLink]=\"['/login']\">Login</a>\n    <router-outlet></router-outlet>\n    </div>\n\n\n</div>\n   \n  ",
             directives: [router_1.ROUTER_DIRECTIVES],
             providers: [
                 hero_service_1.HeroService

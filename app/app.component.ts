@@ -1,17 +1,17 @@
 /**
  * Created by abc on 16-Jul-16.
  */
-import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
-import { HeroService }     from './hero.service';
+import {Component} from '@angular/core';
+import {ROUTER_DIRECTIVES} from '@angular/router';
+import {HeroService}     from './hero.service';
 @Component({
     selector: 'my-app',
     template: `
+<div class="container page-header">
+    <div ><span>{{title}}</span></div>
+</div>
     <div class="container main-div">
-    <h1>{{title}}</h1>
-    <div class="alert col-md-12" role="alert">
-        <a href="#" class="alert-link"></a>
-    </div>
+   
     <div class="col-md-12">
         <a [routerLink]="['/heroes']">Heroes</a>
     <a [routerLink]="['/dashboard']">Dashboard</a>

@@ -28,7 +28,7 @@ var routes = [
     },
     {
         path: '',
-        redirectTo: '/heroes',
+        redirectTo: '/login',
         pathMatch: 'full'
     }
 ];
