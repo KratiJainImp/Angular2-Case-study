@@ -4,9 +4,10 @@
     <form class="form-signin form-group">
         <span id="reauth-email" class="reauth-email"></span>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address"
-               [(ngModel)]="userDetails.username" name="username" required>
+               [(ngModel)]="userDetails.username" name="username"  #username="ngModel"required>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password"
-               [(ngModel)]="userDetails.password" name="password" required>
+               [(ngModel)]="userDetails.password" name="password" #password required>
+        TODO: remove this: {{username.valid}}{{username.pristine}}
         <div id="remember" class="checkbox">
             <label><input type="checkbox" value="remember-me"> Remember me</label>
         </div>
