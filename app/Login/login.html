@@ -1,7 +1,7 @@
 <div class="card card-container">{{diagonostic}}
     <h4 class="sign-up-text">Sign In {{true&&false}}</h4>
     <p id="profile-name" class="profile-name-card"></p>
-    <form class="form-signin form-group">
+    <form class="form-signin form-group" #loginForm="ngForm"  (ngSubmit)="onSubmit()">
         <span id="reauth-email" class="reauth-email"></span>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address"
                [(ngModel)]="userDetails.username" name="username"  #username="ngModel"required>

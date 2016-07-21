@@ -3,24 +3,37 @@
  */
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { NgForm }    from '@angular/forms';
+import {LoginService} from './login.service';
+import { Router } from '@angular/router';
+ //import { NgForm }    from '@angular/forms';
 
 @Component({
     moduleId : module .id,
     selector:'login-form',
-    templateUrl:'login.html'
+    templateUrl:'login.html',
+    providers: [LoginService]
 })
 
 export class LoginComponent implements OnInit{
 
+    private ifUserValid:boolean;
+    constructor(private loginService:LoginService,private router:Router){
+
+    }
     userDetails = new UserCredential();
 
     ngOnInit() {
     console.info("Heyoo..!! Am login");
         }
 
-    OnSubmit(){
+    onSubmit(){ 
+        this.ifUserValid= this.loginService.authenticateUser(this.userDetails);
+        /*if(this.ifUserValid){
+          this.router.navigate(['/heroes']);
+        }
+        else{
 
+        }*/
     }
 
     get diagonostic(){

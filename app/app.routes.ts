@@ -29,7 +29,7 @@ const routes:RouterConfig = [
 
     {
         path: '',
-        redirectTo: '/login',
+        redirectTo: '/heroes',
         pathMatch: 'full'
     }
 
