@@ -1,7 +1,7 @@
 import { provideRouter, RouterConfig }  from '@angular/router';
 import { HeroesComponent } from './heroes.component';
 import {ContactsComponent} from './Contact/contacts.component'
-import {DashboardComponent} from './Dashboard/app.dashboard.component';
+import {DashboardComponent} from './Dashboard/hero.dashboard.component';
 import {HeroDetailComponent} from './hero-detail.component';
 import {LoginComponent} from './Login/login.component';
 

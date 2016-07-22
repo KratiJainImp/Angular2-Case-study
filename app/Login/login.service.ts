@@ -3,8 +3,11 @@
  */
 import { Injectable } from '@angular/core';
 import {UserCredential} from './login.component';
-import {Http} from '@angular/http';
+import {Http,Response} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
 
 
 @Injectable()
@@ -12,18 +15,39 @@ export class LoginService{
     constructor(private http:Http){
 
     }
-private  userJson:string ="H:/apache-tomcat-7.0.70-windows-x64/apache-tomcat-7.0.70/webapps/Angular2-Case-study/data/userList.json";
-    authenticateUser(user:UserCredential){
-        //Todo : http request for so
-       // return true;
-
+private  userJson ="app/data/userList.json";
+    private userCredentials:UserCredential;
+    authenticateUser(user:UserCredential):Observable<UserCredential[]>{
+        this.userCredentials = user;
+        console.log("calling authenticate user");
         return this.http.get(this.userJson)
-            .toPromise()
-            .then(response => console.log("response is ",response))
+            .map(this.validateUser)
             .catch(this.handleError);
     }
 
-    handleError(){
-        console.log("Request error");
+
+    private validateUser(res: Response){
+        let ifUserValid:boolean = false;
+        let allUsersCredentials:UserCredential[] = res.json();
+        allUsersCredentials.forEach(user=>{
+            if(user.username==this.userCredentials.username&&user.password==this.userCredentials.password){
+                ifUserValid=true;
+            }
+        })
+        return ifUserValid;
+
+    }
+    handleError(error:any){
+        let errMsg = (error.message) ? error.message :
+        error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+        console.error(errMsg); // log to console instead
+        return Observable.throw(errMsg);
     }
 }
+
+
+// return true;
+/*return this.http.get(this.userJson)
+ .toPromise()
+ .then(response => console.log("response is ",response))
+ .catch(this.handleError);*/

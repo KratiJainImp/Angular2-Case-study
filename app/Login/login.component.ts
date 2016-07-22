@@ -16,7 +16,8 @@ import { Router } from '@angular/router';
 
 export class LoginComponent implements OnInit{
 
-    private ifUserValid:boolean;
+    private ifUserValid:any;
+    private errorMessage;
     constructor(private loginService:LoginService,private router:Router){
 
     }
@@ -26,14 +27,15 @@ export class LoginComponent implements OnInit{
     console.info("Heyoo..!! Am login");
         }
 
-    onSubmit(){ 
+    onSubmit(){
+        console.log("no submit")
         this.ifUserValid= this.loginService.authenticateUser(this.userDetails);
-        /*if(this.ifUserValid){
-          this.router.navigate(['/heroes']);
-        }
-        else{
 
-        }*/
+        this.loginService.authenticateUser(this.userDetails)
+            .subscribe(
+                ifValid => this.ifUserValid = ifValid,
+                 msg=>  this.errorMessage = <any>msg);
+        
     }
 
     get diagonostic(){

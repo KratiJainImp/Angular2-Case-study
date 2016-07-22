@@ -2,7 +2,7 @@
 var router_1 = require('@angular/router');
 var heroes_component_1 = require('./heroes.component');
 var contacts_component_1 = require('./Contact/contacts.component');
-var app_dashboard_component_1 = require('./Dashboard/app.dashboard.component');
+var hero_dashboard_component_1 = require('./Dashboard/hero.dashboard.component');
 var hero_detail_component_1 = require('./hero-detail.component');
 var login_component_1 = require('./Login/login.component');
 var routes = [
@@ -16,7 +16,7 @@ var routes = [
     },
     {
         path: 'dashboard',
-        component: app_dashboard_component_1.DashboardComponent
+        component: hero_dashboard_component_1.DashboardComponent
     },
     {
         path: 'detail/:id',

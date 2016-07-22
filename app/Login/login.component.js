@@ -25,13 +25,11 @@ var LoginComponent = (function () {
         console.info("Heyoo..!! Am login");
     };
     LoginComponent.prototype.onSubmit = function () {
+        var _this = this;
+        console.log("no submit");
         this.ifUserValid = this.loginService.authenticateUser(this.userDetails);
-        /*if(this.ifUserValid){
-          this.router.navigate(['/heroes']);
-        }
-        else{
-
-        }*/
+        this.loginService.authenticateUser(this.userDetails)
+            .subscribe(function (ifValid) { return _this.ifUserValid = ifValid; }, function (msg) { return _this.errorMessage = msg; });
     };
     Object.defineProperty(LoginComponent.prototype, "diagonostic", {
         get: function () {
