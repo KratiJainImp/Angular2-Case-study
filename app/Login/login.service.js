@@ -20,6 +20,7 @@ require('rxjs/add/operator/map');
 var LoginService = (function () {
     function LoginService(http) {
         this.http = http;
+        this.ifUserValid = false;
         this.userJson = "app/data/userList.json";
     }
     LoginService.prototype.authenticateUser = function (user) {
@@ -30,15 +31,15 @@ var LoginService = (function () {
             .catch(this.handleError);
     };
     LoginService.prototype.validateUser = function (res) {
-        var _this = this;
-        var ifUserValid = false;
-        var allUsersCredentials = res.json();
-        allUsersCredentials.forEach(function (user) {
-            if (user.username == _this.userCredentials.username && user.password == _this.userCredentials.password) {
-                ifUserValid = true;
-            }
-        });
-        return ifUserValid;
+        return res.json() || {};
+        /*   let ifUserValid:boolean = false;
+        let allUsersCredentials:UserCredential[] = res.json();
+        allUsersCredentials.forEach(user=>{
+            if(user.username==this.userCredentials.username&&user.password==this.userCredentials.password){
+                ifUserValid=true;
+    }
+        })
+        return ifUserValid;*/
     };
     LoginService.prototype.handleError = function (error) {
         var errMsg = (error.message) ? error.message :

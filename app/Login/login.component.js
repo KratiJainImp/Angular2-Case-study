@@ -26,10 +26,20 @@ var LoginComponent = (function () {
     };
     LoginComponent.prototype.onSubmit = function () {
         var _this = this;
-        console.log("no submit");
-        this.ifUserValid = this.loginService.authenticateUser(this.userDetails);
+        var ifValid = false;
         this.loginService.authenticateUser(this.userDetails)
-            .subscribe(function (ifValid) { return _this.ifUserValid = ifValid; }, function (msg) { return _this.errorMessage = msg; });
+            .subscribe(function (allData) {
+            _this.allUserData = allData;
+            _this.allUserData.forEach(function (userData) {
+                if (userData.username == _this.userDetails.username && userData.password == _this.userDetails.password) {
+                    ifValid = true;
+                }
+            });
+            ifValid ? _this.router.navigate(['dashboard']) : console.log("errror");
+        }, function (msg) {
+            _this.errorMessage = msg;
+            console.log("errr", _this.errorMessage);
+        });
     };
     Object.defineProperty(LoginComponent.prototype, "diagonostic", {
         get: function () {

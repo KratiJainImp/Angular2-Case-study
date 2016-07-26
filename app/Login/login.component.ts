@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit{
 
     private ifUserValid:any;
     private errorMessage;
+    private allUserData : UserCredential[];
     constructor(private loginService:LoginService,private router:Router){
 
     }
@@ -28,13 +29,23 @@ export class LoginComponent implements OnInit{
         }
 
     onSubmit(){
-        console.log("no submit")
-        this.ifUserValid= this.loginService.authenticateUser(this.userDetails);
-
+       let ifValid:boolean=false;
         this.loginService.authenticateUser(this.userDetails)
             .subscribe(
-                ifValid => this.ifUserValid = ifValid,
-                 msg=>  this.errorMessage = <any>msg);
+                (allData: UserCredential[]) => {
+                    this.allUserData = allData;
+                    this.allUserData.forEach(userData=>{
+                        if(userData.username==this.userDetails.username&&userData.password==this.userDetails.password){
+                            ifValid=true;
+                        }
+                    });
+
+                    ifValid?this.router.navigate(['dashboard']):console.log("errror");
+                },
+                 msg=>  {
+                     this.errorMessage = <any>msg;
+                     console.log("errr",this.errorMessage);
+                 });
         
     }
 

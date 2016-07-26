@@ -12,6 +12,8 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class LoginService{
+    errorMessage:string;
+    ifUserValid:boolean = false;
     constructor(private http:Http){
 
     }
@@ -23,18 +25,19 @@ private  userJson ="app/data/userList.json";
         return this.http.get(this.userJson)
             .map(this.validateUser)
             .catch(this.handleError);
-    }
+                   }
 
 
     private validateUser(res: Response){
-        let ifUserValid:boolean = false;
+     return res.json() || {};
+        /*   let ifUserValid:boolean = false;
         let allUsersCredentials:UserCredential[] = res.json();
         allUsersCredentials.forEach(user=>{
             if(user.username==this.userCredentials.username&&user.password==this.userCredentials.password){
                 ifUserValid=true;
-            }
+    }
         })
-        return ifUserValid;
+        return ifUserValid;*/
 
     }
     handleError(error:any){
