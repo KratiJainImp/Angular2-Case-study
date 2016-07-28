@@ -12,14 +12,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Created by abc on 17-Jul-16.
  */
 var core_1 = require('@angular/core');
+var login_service_1 = require('./login.service');
+var router_1 = require('@angular/router');
+//import { NgForm }    from '@angular/forms';
 var LoginComponent = (function () {
-    function LoginComponent() {
+    function LoginComponent(loginService, router) {
+        this.loginService = loginService;
+        this.router = router;
         this.userDetails = new UserCredential();
     }
     LoginComponent.prototype.ngOnInit = function () {
         console.info("Heyoo..!! Am login");
     };
-    LoginComponent.prototype.OnSubmit = function () {
+    LoginComponent.prototype.onSubmit = function () {
+        var _this = this;
+        var ifValid = false;
+        this.loginService.authenticateUser(this.userDetails)
+            .subscribe(function (allData) {
+            _this.allUserData = allData;
+            _this.allUserData.forEach(function (userData) {
+                if (userData.username == _this.userDetails.username && userData.password == _this.userDetails.password) {
+                    ifValid = true;
+                }
+            });
+            ifValid ? _this.router.navigate(['dashboard']) : console.log("errror");
+        }, function (msg) {
+            _this.errorMessage = msg;
+            console.log("errr", _this.errorMessage);
+        });
     };
     Object.defineProperty(LoginComponent.prototype, "diagonostic", {
         get: function () {
@@ -32,9 +52,10 @@ var LoginComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: 'login-form',
-            templateUrl: 'login.html'
+            templateUrl: 'login.html',
+            providers: [login_service_1.LoginService]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [login_service_1.LoginService, router_1.Router])
     ], LoginComponent);
     return LoginComponent;
 }());

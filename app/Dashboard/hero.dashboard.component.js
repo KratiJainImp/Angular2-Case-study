@@ -19,10 +19,17 @@ var DashboardComponent = (function () {
         this.router = router;
         this.heroService = heroService;
     }
+    DashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.heroService.getHeroes()
+            .then(function (heroes) { return _this.heroes = heroes.slice(1, 5); });
+    };
+    DashboardComponent.prototype.gotoDetail = function () {
+    };
     DashboardComponent = __decorate([
         core_1.Component({
             selector: 'my-dashboard',
-            template: '<h3>My Dashboard</h3>',
+            template: "<h3>My Dashboard</h3>\n                   <ul>\n                   <li *ngFor=\"let hero of heroes\">{{hero.name}}</li>\n</ul> ",
             providers: [hero_service_1.HeroService]
         }), 
         __metadata('design:paramtypes', [router_1.Router, hero_service_1.HeroService])
@@ -30,4 +37,4 @@ var DashboardComponent = (function () {
     return DashboardComponent;
 }());
 exports.DashboardComponent = DashboardComponent;
-//# sourceMappingURL=app.dashboard.component.js.map
+//# sourceMappingURL=hero.dashboard.component.js.map
