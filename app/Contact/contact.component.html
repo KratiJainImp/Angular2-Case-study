@@ -1,0 +1,17 @@
+
+<h1>Contacts UI</h1>
+<input #searchText (keyup)="searchGrid(searchText.value)">
+<button (click)="deleteContact()">Delete Contact</button>
+<input [value]="testTwoWay">d
+<input [value]="testTwoWay">Another
+<ag-grid-ng2 #agGrid style="width: 100%; " class="ag-material"
+             [columnDefs]="columnDefs"
+             [showToolPanel]="showToolPanel"
+             [rowData]="rowData"
+             [gridOptions]="gridOptions"
+             rowSelection="multiple">
+</ag-grid-ng2>
+
+
+
+<button (click)="deleteContact()">Delete Contact</button>
