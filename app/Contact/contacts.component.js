@@ -15,7 +15,6 @@ var core_1 = require('@angular/core');
 var main_1 = require('ag-grid-ng2/main');
 var ContactsComponent = (function () {
     function ContactsComponent() {
-        this.iteratorI = 0;
         this.testTwoWay = "nothing";
         this.gridOptions = {};
         this.gridOptions.rowHeight = 120;
@@ -30,33 +29,41 @@ var ContactsComponent = (function () {
         ];
         this.columnDefs = [
             {
-                headerName: 'Details', field: 'userDetail.name', sort: 'asc', comparator: this.compareDetails, filter: 'text',
+                headerName: 'Details',
+                sort: 'asc',
+                comparator: this.compareDetails,
+                filter: 'text',
                 filterParams: { apply: true, newRowsAction: 'keep' },
-                cellRenderer: function (params, index) {
+                cellRenderer: function (params, index, a, b, c) {
                     return "<div><span>" + params.data.name + "</span><br>\n                    <span>" + params.data.address + "</span><br>\n                    <span>" + params.data.number + "</span><br>\n                    <span>" + params.data.email + "</span></div>";
                 }
             },
             {
                 headerName: 'Action', sort: 'asc',
-                cellRenderer: function (params, index) {
-                    return "<span><button (click)=\"console.log('dd')\" >Read</button></span>\n                                                  <span><button (click)=\"deleteContact()\">Delete</button></span>";
+                cellRenderer: function (params) {
+                    var gui = document.createElement('span');
+                    gui.innerHTML = "<button class=\"read-btn\" (click)=\"readData()\" >Read</button></span>\n                      <span><button class=\"delete-btn\" (click)=\"readData()\">Delete</button></span>";
+                    gui.querySelectorAll(".read-btn")[0].addEventListener('click', function () {
+                        console.log("read", params.data);
+                    });
+                    gui.querySelectorAll(".delete-btn")[0].addEventListener('click', function () {
+                        console.log("delete", params.data);
+                    });
+                    return gui;
                 }
             }
         ];
     }
-    ContactsComponent.prototype.readContact = function () {
-        console.log("read");
-    };
-    ContactsComponent.prototype.deleteContact = function () {
-        console.log("delete");
-    };
     ContactsComponent.prototype.searchGrid = function (value) {
+        console.log("clicked", this.searchText);
         this.searchText = value;
+        console.log("clicked", this.searchText);
+        this.gridOptions.setQuickFilte(this.searchText);
         /*console.log(this.searchText);
-        this.iteratorI++;
-        console.log("updateing");
-        this.rowData.push({name: "Tarsdfdasf", address: "Vijay asdfdsafNagar", number: "+9156sdf8985", email: "tar@dfsafupd"});
-        this.testTwoWay="new"+this.iteratorI;*/
+         this.iteratorI++;
+         console.log("updateing");
+         this.rowData.push({name: "Tarsdfdasf", address: "Vijay asdfdsafNagar", number: "+9156sdf8985", email: "tar@dfsafupd"});
+         this.testTwoWay="new"+this.iteratorI;*/
     };
     ContactsComponent.prototype.compareDetails = function (valueA, valueB, rowA, rowB, inverter) {
         if (rowA.data.name.toLowerCase() > rowB.data.name.toLowerCase()) {

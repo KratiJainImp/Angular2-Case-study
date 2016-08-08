@@ -4,7 +4,8 @@
 import {Component} from '@angular/core';
 import {OnInit} from '@angular/core';
 import {AgGridNg2} from 'ag-grid-ng2/main';
-import {GridOptions} from 'ag-grid/main';
+import {GridOptions, ICellRenderer} from 'ag-grid/main';
+import {HeroService} from '../hero.service';
 
 @Component({
     moduleId: module.id,
@@ -19,15 +20,15 @@ export class ContactsComponent {
     private columnDefs;
     private gridOptions;
     private testTwoWay;
-    private iteratorI=0;
     private searchText:string;
+
     constructor() {
-        this.testTwoWay="nothing";
+        this.testTwoWay = "nothing";
         this.gridOptions = <GridOptions>{};
         this.gridOptions.rowHeight = 120;
         this.gridOptions.enableSorting = true;
         this.gridOptions.enableFilter = true;
-        this.gridOptions.quickFilterText=this.searchText;
+        this.gridOptions.quickFilterText = this.searchText;
         this.rowData = [
             {name: "Tari", address: "Vijay Nagar", number: "+91568985", email: "tar@upd"},
             {name: "krati", address: "Nanda Nagar", number: "+96585", email: "kj@69"},
@@ -37,9 +38,12 @@ export class ContactsComponent {
 
         this.columnDefs = [
             {
-                headerName: 'Details', field: 'userDetail.name', sort: 'asc', comparator: this.compareDetails, filter: 'text',
+                headerName: 'Details',
+                sort: 'asc',
+                comparator: this.compareDetails,
+                filter: 'text',
                 filterParams: {apply: true, newRowsAction: 'keep'},
-                cellRenderer: function (params:any, index:any) {
+                cellRenderer: function (params:any, index:any, a:any, b:any, c:any) {
                     return `<div><span>${params.data.name}</span><br>
                     <span>${params.data.address}</span><br>
                     <span>${params.data.number}</span><br>
@@ -49,9 +53,18 @@ export class ContactsComponent {
 
             {
                 headerName: 'Action', sort: 'asc',
-                cellRenderer: function (params:any, index:any) {
-                    return `<span><button (click)="console.log('dd')" >Read</button></span>
-                                                  <span><button (click)="deleteContact()">Delete</button></span>`
+                cellRenderer: function (params:any) {
+                    let gui = document.createElement('span');
+                    gui.innerHTML = `<button class="read-btn" (click)="readData()" >Read</button></span>
+                      <span><button class="delete-btn" (click)="readData()">Delete</button></span>`;
+                    gui.querySelectorAll(".read-btn")[0].addEventListener('click',function () {
+                        console.log("read",params.data);
+                    });
+                    gui.querySelectorAll(".delete-btn")[0].addEventListener('click',function () {
+                        console.log("delete",params.data);
+                    });
+
+                    return gui;
                 }
 
             }
@@ -60,30 +73,30 @@ export class ContactsComponent {
 
     }
 
-    readContact() {
-        console.log("read");
-    }
-
-    deleteContact() {
-        console.log("delete");
-    }
-
-    searchGrid(value){
-        this.searchText=value;
+    searchGrid(value) {
+        console.log("clicked", this.searchText);
+        this.searchText = value;
+        console.log("clicked", this.searchText);
+        this.gridOptions.setQuickFilte(this.searchText);
         /*console.log(this.searchText);
-        this.iteratorI++;
-        console.log("updateing");
-        this.rowData.push({name: "Tarsdfdasf", address: "Vijay asdfdsafNagar", number: "+9156sdf8985", email: "tar@dfsafupd"});
-        this.testTwoWay="new"+this.iteratorI;*/
+         this.iteratorI++;
+         console.log("updateing");
+         this.rowData.push({name: "Tarsdfdasf", address: "Vijay asdfdsafNagar", number: "+9156sdf8985", email: "tar@dfsafupd"});
+         this.testTwoWay="new"+this.iteratorI;*/
 
     }
-    compareDetails(valueA,valueB,rowA,rowB,inverter) {
-        if(rowA.data.name.toLowerCase()>rowB.data.name.toLowerCase()){
+
+    compareDetails(valueA, valueB, rowA, rowB, inverter) {
+        if (rowA.data.name.toLowerCase() > rowB.data.name.toLowerCase()) {
             return 1;
         }
-        else{
+        else {
             return -1;
         }
 
     }
+
 }
+
+
+
